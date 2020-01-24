@@ -20,6 +20,5 @@ class FrnAndSugFrnSerializer(serializers.Serializer):
             exclude(id=person.id).\
             values_list('full_name', flat=True).\
             annotate(count=Count('full_name')).order_by('count')
-        print(suggested_friends.query)
         print(len(suggested_friends))
         return list(suggested_friends)
