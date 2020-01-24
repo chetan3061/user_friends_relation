@@ -1,7 +1,13 @@
+import os, sys
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'users_friends_relation.settings')
+import django
+django.setup()
 from faker import Faker
-from .models import Person
+from accounts.models import Person
 import random
 fake = Faker()
+
+Person.objects.all().delete()
 
 
 def custom_random_int(from_id, to_id, exclude_id):
@@ -20,9 +26,9 @@ class SeedFakeData(object):
             print('bulk_size should be greater than 50')
         self.bulk_size = bulk_size
         self.total_size = total_size
-        self.objects_list = None
+        self.objects_list = []
         self.count = 0
-        self.relation = None
+        self.relation = []
 
     def commit(self):
         Person.objects.bulk_create(self.objects_list)
@@ -58,11 +64,11 @@ class SeedFakeData(object):
                 self.relation.append(
                     self.PersonFriendsRelation(from_person_id=from_person_id, to_person_id=to_person_id)
                 )
-            if len(self.relation) > self.bulk_size*10:
+            if len(self.relation) > self.bulk_size*30:
                 self.add_m2m_relation_table_to_data(ignore_conflicts=True)
-            percent_complete = self.count / self.total_size * 100
+            percent_complete = (self.count+1) / self.total_size * 100
             print(
-                "Adding relation_table to database: {:.2f}%".format(percent_complete),
+                "Adding reverse_relation_table to database: {:.2f}%".format(percent_complete),
                 end='\r',
                 flush=True
             )
@@ -83,13 +89,13 @@ class SeedFakeData(object):
                 exclude_id.append(friend_id)
                 self.count += 1
                 self.relation.append(self.PersonFriendsRelation(from_person_id=from_person_id, to_person_id=friend_id))
-                percent_complete = (self.count+1) / (self.total_size*50) * 100
+                percent_complete = (self.count+50) / (self.total_size*50) * 100
                 print(
                     "Adding relation_table to database: {:.2f}%".format(percent_complete),
                     end='\r',
                     flush=True
                 )
-                if len(self.relation) >= self.bulk_size*10:
+                if len(self.relation) >= self.bulk_size*50:
                     self.add_m2m_relation_table_to_data()
         if len(self.relation) >= 0:
             self.add_m2m_relation_table_to_data()
@@ -105,3 +111,11 @@ class SeedFakeData(object):
         print('\n database update completed')
         self.count = 0
         self.relation = []
+
+
+def create_database(data_size=1000):
+    fake_data_seeder = SeedFakeData(data_size)
+    fake_data_seeder.run()
+
+
+create_database()
