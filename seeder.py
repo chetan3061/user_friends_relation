@@ -11,6 +11,9 @@ Person.objects.all().delete()
 
 
 def custom_random_int(from_id, to_id, exclude_id):
+    '''
+    custom random int generator to exclude the provided integers from generating
+    '''
     random_int = random.randint(from_id, to_id)
     if random_int not in exclude_id:
         return random_int
@@ -35,6 +38,7 @@ class SeedFakeData(object):
         self.objects_list = []
 
     def seed_persons_to_database(self):
+        '''seeds created person tables into the database'''
         for _ in range(self.total_size):
             full_name = fake.name()
             self.objects_list.append(Person(full_name=full_name))
@@ -49,11 +53,15 @@ class SeedFakeData(object):
                 self.commit()
 
     def complete_commit(self):
+        '''to make sure all the generated rows of person model are seeded'''
         if len(self.objects_list) > 0:
             self.commit()
         self.count = 0
 
     def build_reverse_relation_for_friends(self):
+        '''creates symmetrical relationship in the table(makes sure if a is b's friend then bis also a's friend)
+        without adding any duplicates.
+        '''
         self.count = 0
         last_person_seeded_id = Person.objects.all().last().id
         for to_person_id in range(last_person_seeded_id - self.total_size + 1, last_person_seeded_id):
@@ -76,10 +84,12 @@ class SeedFakeData(object):
             self.add_m2m_relation_table_to_data(ignore_conflicts=True)
 
     def add_m2m_relation_table_to_data(self, ignore_conflicts=False):
+        '''seeding the friends table into database'''
         self.PersonFriendsRelation.objects.bulk_create(self.relation, ignore_conflicts=ignore_conflicts)
         self.relation = []
 
     def create_m2m_relation_table(self):
+        '''creates 50 friends for each person'''
         last_person_seeded_id = Person.objects.all().last().id
         self.count = 0
         for from_person_id in range(last_person_seeded_id-self.total_size+1, last_person_seeded_id):
