@@ -16,7 +16,7 @@ class SeedFakeData(object):
     PersonFriendsRelation = Person.friends.through
 
     def __init__(self, total_size, bulk_size=100):
-        if bulk_size<50:
+        if bulk_size < 50:
             print('bulk_size should be greater than 50')
         self.bulk_size = bulk_size
         self.total_size = total_size
