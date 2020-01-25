@@ -7,6 +7,7 @@ from accounts.models import Person
 import random
 fake = Faker()
 
+print('prior data from database')
 Person.objects.all().delete()
 
 
@@ -40,7 +41,7 @@ class SeedFakeData(object):
     def seed_persons_to_database(self):
         '''seeds created person tables into the database'''
         for _ in range(self.total_size):
-            full_name = fake.name()
+            full_name = fake.first_name().lower()
             self.objects_list.append(Person(full_name=full_name))
             self.count += 1
             percent_complete = self.count / self.total_size * 100
