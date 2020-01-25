@@ -6,10 +6,6 @@ from django.http import JsonResponse
 
 
 class FriendsDetailAPIView(APIView):
-    # def get(self, request, name):
-    #     serializer = FrnAndSugFrnSerializer(name)
-    #     return Response(serializer.data)
-
     def post(self, request):
         data = request.data
         if 'user_name' in data:
