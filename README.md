@@ -1,11 +1,9 @@
 #USER FRIENDS RELATION PROJECT
  
 ##Getting started
-  
 download the file and install the requirements using requirements.txt 
   
 ### To seed data to database
-  
 To seed data to the database run seeder.py  
   
 ex: python seeder.py 
