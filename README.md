@@ -12,11 +12,17 @@ the seeder adds 1000 users to the database first and then develops relation tabl
   
 The batch size to do bulk insert is 100. You can change it manually 
  
-### To get friends list and suggested friends list using api
+### To get friends list and suggested friends list using api  
+
+Access local api @ local_host/friends 
+
+**ex: http://127.0.0.1:8000/friends**
  
-to get the friends and the suggest friends through api, you have to post the user name 
+To get the friends and the suggest friends through api, you have to post the user name 
  
-ex: {"user_name":"nihit"} 
+**ex: {"user_name":"nihit"}**   
+
+if many users found with the same name the result will be only for one user 
  
 which will return the result in the below form 
  
