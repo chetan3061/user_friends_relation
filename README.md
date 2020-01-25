@@ -1,6 +1,6 @@
-#USER FRIENDS RELATION PROJECT
+# USER FRIENDS RELATION PROJECT
  
-##Getting started
+## Getting started
 download the file and install the requirements using requirements.txt 
   
 ### To seed data to database
