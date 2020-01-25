@@ -13,6 +13,5 @@ class FriendsDetailAPIView(APIView):
                 person = Person.objects.filter(full_name=data['user_name']).first()
                 serializer = FrnAndSugFrnSerializer(person)
                 return Response(serializer.data)
-        else:
-            response = JsonResponse({'error': 'no users found for given name'})
-            return Response(response.content)
+        response = JsonResponse({'error': 'no users found for given name'})
+        return Response(response.content)
