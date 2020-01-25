@@ -24,6 +24,6 @@ To get the friends and the suggest friends through api, you have to post the use
 
 if many users found with the same name the result will be only for one user 
  
-which will return the result in the below form 
+The obtained  result is in the form of 
  
 {'friends': ['chetan', 'siddhu', 'mouli'], 'suggested_friends': ['ravi', 'ram', 'shiva']} 
