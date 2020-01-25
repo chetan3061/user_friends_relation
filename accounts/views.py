@@ -12,9 +12,9 @@ class FriendsDetailAPIView(APIView):
 
     def post(self, request):
         data = request.data
-        if 'name' in data:
-            if Person.objects.filter(full_name=data['name'].lower()).exists():
-                person = Person.objects.filter(full_name=data['name']).first()
+        if 'user_name' in data:
+            if Person.objects.filter(full_name=data['user_name'].lower()).exists():
+                person = Person.objects.filter(full_name=data['user_name']).first()
                 serializer = FrnAndSugFrnSerializer(person)
                 return Response(serializer.data)
         else:
