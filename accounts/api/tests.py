@@ -20,7 +20,7 @@ class PersonAPITestCase(APITestCase):
         chetan.friends.add(ravi, ram)
 
     def test_person_friends_suggested_friends(self):
-        data = {"name":"nihit"}
+        data = {"user_name":"nihit"}
         url = reverse("person:friends_list")
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
